@@ -4,10 +4,10 @@ export const profile = {
   title: "Creative Developer & Digital Builder",
   description:
     "I build modern, responsive websites and digital products with clean code, thoughtful interactions, and attention to detail.",
-  profileImage: "",
+  profileImage: "/asset/projeck/xyrons-profil.jpg",
   cvUrl: "",
   email: "",
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "",
+  githubUrl: "https://github.com/Rons26-cloud",
 } as const;
 
 export const about = {

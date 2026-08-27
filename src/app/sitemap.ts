@@ -1,4 +1,15 @@
 import type { MetadataRoute } from "next";
-import { profile } from "@/data/profile";
 import { projects } from "@/data/projects";
-export default function sitemap(): MetadataRoute.Sitemap { if (!profile.siteUrl) return []; return [{ url: profile.siteUrl, priority: 1 }, ...projects.map((project) => ({ url: `${profile.siteUrl}/projects/${project.slug}`, priority: 0.8 }))]; }
+import { absoluteUrl } from "@/lib/site";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [
+    { url: absoluteUrl(), changeFrequency: "monthly", priority: 1 },
+    ...projects.map((project) => ({
+      url: absoluteUrl(`/projects/${project.slug}`),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+      ...(project.coverImage ? { images: [absoluteUrl(project.coverImage)] } : {}),
+    })),
+  ];
+}

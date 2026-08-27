@@ -1,3 +1,10 @@
 import type { MetadataRoute } from "next";
-import { profile } from "@/data/profile";
-export default function robots(): MetadataRoute.Robots { return { rules: { userAgent: "*", allow: "/" }, ...(profile.siteUrl ? { sitemap: `${profile.siteUrl}/sitemap.xml`, host: profile.siteUrl } : {}) }; }
+import { absoluteUrl, isProductionSite, siteUrl } from "@/lib/site";
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: isProductionSite ? { userAgent: "*", allow: "/" } : { userAgent: "*", disallow: "/" },
+    sitemap: absoluteUrl("/sitemap.xml"),
+    host: siteUrl.origin,
+  };
+}

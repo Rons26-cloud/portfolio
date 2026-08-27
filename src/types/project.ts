@@ -1,26 +1,37 @@
+export type ProjectImage = {
+  src: string;
+  alt: string;
+  caption?: string;
+};
+
 export type Project = {
   slug: string;
   name: string;
   category: string;
   description: string;
   image: string;
+  displayMode?: "desktop" | "mobile";
   technologies: string[];
   githubUrl?: string;
   liveUrl?: string;
-  problem: string;
-  solution: string;
-  features: string[];
-  screenshots: string[];
+  problem?: string;
+  solution?: string;
+  features?: string[];
+  packageContents?: {
+    title: string;
+    description: string;
+  }[];
+  offer?: {
+    title: string;
+    description: string;
+    ctaLabel?: string;
+  };
+  coverImage: string;
+  gallery: ProjectImage[];
 };
 
-export type SocialKey = "github" | "instagram" | "tiktok" | "linkedin" | "youtube";
+export type SocialKey = "github" | "instagram" | "tiktok" | "linkedin" | "youtube" | "facebook";
 export type Social = { key: SocialKey; label: string; url: string };
-export type Skill = {
-  name: string;
-  icon: React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>;
-  color: string;
-  url: string;
-};
-
-export type SkillGroup = { category: string; skills: Skill[] };
+export type Skill = { name: string; color: string; url: string; iconKey: string };
+export type SkillGroup = { category: string; items: Skill[] };
 export type NavigationItem = { label: string; href: string };

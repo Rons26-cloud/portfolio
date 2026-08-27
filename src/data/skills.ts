@@ -1,52 +1,42 @@
 import type { SkillGroup } from "@/types/project";
-import {
-  SiReact,
-  SiNextdotjs,
-  SiTypescript,
-  SiJavascript,
-  SiTailwindcss,
-  SiNodedotjs,
-  SiSupabase,
-  SiPostgresql,
-  SiFlutter,
-  SiGit,
-  SiGithub,
-  SiFigma,
-} from "react-icons/si";
-import { VscVscode } from "react-icons/vsc";
 
 export const skills: SkillGroup[] = [
   {
     category: "Frontend",
-    skills: [
-      { name: "React", icon: SiReact, color: "#61DAFB", url: "https://react.dev/" },
-      { name: "Next.js", icon: SiNextdotjs, color: "#ffffff", url: "https://nextjs.org/" },
-      { name: "TypeScript", icon: SiTypescript, color: "#3178C6", url: "https://www.typescriptlang.org/" },
-      { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
-      { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4", url: "https://tailwindcss.com/" },
+    items: [
+      { name: "React", color: "#61DAFB", iconKey: "react", url: "https://react.dev/" },
+      { name: "Next.js", color: "#FFFFFF", iconKey: "nextjs", url: "https://nextjs.org/" },
+      { name: "TypeScript", color: "#3178C6", iconKey: "typescript", url: "https://www.typescriptlang.org/" },
+      { name: "JavaScript", color: "#F7DF1E", iconKey: "javascript", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
+      { name: "Tailwind CSS", color: "#06B6D4", iconKey: "tailwind", url: "https://tailwindcss.com/" },
     ],
   },
   {
     category: "Backend",
-    skills: [
-      { name: "Node.js", icon: SiNodedotjs, color: "#339933", url: "https://nodejs.org/" },
-      { name: "Supabase", icon: SiSupabase, color: "#3ECF8E", url: "https://supabase.com/" },
-      { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1", url: "https://www.postgresql.org/" },
+    items: [
+      { name: "Node.js", color: "#339933", iconKey: "nodejs", url: "https://nodejs.org/" },
+      { name: "Supabase", color: "#3ECF8E", iconKey: "supabase", url: "https://supabase.com/" },
+      { name: "PostgreSQL", color: "#4169E1", iconKey: "postgresql", url: "https://www.postgresql.org/" },
     ],
   },
   {
     category: "Mobile",
-    skills: [
-      { name: "Flutter", icon: SiFlutter, color: "#02569B", url: "https://flutter.dev/" },
+    items: [{ name: "Flutter", color: "#02569B", iconKey: "flutter", url: "https://flutter.dev/" }],
+  },
+  {
+    category: "Game Development",
+    items: [
+      { name: "Unity", color: "#D9DEE3", iconKey: "unity", url: "https://unity.com/" },
+      { name: "C#", color: "#512BD4", iconKey: "csharp", url: "https://learn.microsoft.com/dotnet/csharp/" },
     ],
   },
   {
     category: "Tools",
-    skills: [
-      { name: "Git", icon: SiGit, color: "#F05032", url: "https://git-scm.com/" },
-      { name: "GitHub", icon: SiGithub, color: "#ffffff", url: "https://github.com/" },
-      { name: "VS Code", icon: VscVscode, color: "#007ACC", url: "https://code.visualstudio.com/" },
-      { name: "Figma", icon: SiFigma, color: "#F24E1E", url: "https://www.figma.com/" },
+    items: [
+      { name: "Git", color: "#F05032", iconKey: "git", url: "https://git-scm.com/" },
+      { name: "GitHub", color: "#FFFFFF", iconKey: "github", url: "https://github.com/" },
+      { name: "VS Code", color: "#007ACC", iconKey: "vscode", url: "https://code.visualstudio.com/" },
+      { name: "Figma", color: "#F24E1E", iconKey: "figma", url: "https://www.figma.com/" },
     ],
   },
 ];

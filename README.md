@@ -1,68 +1,36 @@
-# Xyrons Portfolio
+# Xyrons
 
-The official portfolio of Xyrons, a creative developer and digital builder focused on modern web applications, mobile products, and interactive digital experiences.
+Saya Xyrons, creative developer & digital builder. Portofolio ini berisi kumpulan proyek web dan mobile yang pernah saya kerjakan — dari landing page sampai aplikasi dengan database dan fitur interaktif.
 
-## Highlights
+## Teknologi
 
-- Responsive bilingual interface in English and Indonesian
-- Project case studies with galleries, technology links, and source references
-- App Router metadata, Open Graph cards, sitemap, robots policy, and structured data
-- Content Security Policy and defensive HTTP headers
-- Optimized images, local font delivery, and static project generation
+Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · Motion · Lucide / React Icons
 
-## Tech Stack
+## Cara Menjalankan
 
-- Next.js 16 and React 19
-- TypeScript
-- Tailwind CSS 4
-- Motion
-- React Icons and Lucide
-
-## Local Development
-
-Requirements: Node.js 20.9 or newer and pnpm 11.
+Butuh Node.js 20.9+ dan pnpm 11.
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Open `http://localhost:3000` in a browser.
+Buka `http://localhost:3000`.
 
-## Configuration
+## Struktur Data
 
-Create `.env.local` and set the public production origin:
+Konten portofolio diatur lewat file data agar gampang diedit tanpa menyentuh komponen:
 
-```bash
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
-```
+- `src/data/profile.ts` — identitas dan deskripsi
+- `src/data/projects.ts` — daftar proyek
+- `src/data/skills.ts` — teknologi yang dikuasai
+- `src/data/socials.ts` — tautan sosial
+- `src/lib/translations.ts` — teks bahasa Indonesia dan Inggris
 
-Use the complete HTTPS origin without a trailing slash. Vercel deployments automatically fall back to `VERCEL_PROJECT_PRODUCTION_URL` when the variable is not set. Local builds use `http://localhost:3000` and instruct crawlers not to index the site.
-
-Portfolio content is maintained in:
-
-- `src/data/profile.ts` for identity and profile details
-- `src/data/projects.ts` for project case studies
-- `src/data/skills.ts` for the technology stack
-- `src/data/socials.ts` for verified social profiles
-- `src/lib/translations.ts` for English and Indonesian copy
-
-The Xyrons favicon is served through the App Router convention at `src/app/icon.png`.
-
-## Quality Checks
+## Build
 
 ```bash
 pnpm typecheck
 pnpm lint
 pnpm build
 ```
-
-All checks should pass before deployment. The production build generates the homepage, project routes, Open Graph image, favicon, web manifest, robots file, and sitemap.
-
-## Deployment
-
-Deploy through Vercel or another Next.js-compatible Node.js platform. Configure `NEXT_PUBLIC_SITE_URL` for the canonical production domain, then verify `/robots.txt`, `/sitemap.xml`, `/manifest.webmanifest`, and the social preview after deployment.
-
-## License
-
-The source code and visual identity are maintained by Xyrons. Project images, branding, and portfolio content may not be reused without permission.

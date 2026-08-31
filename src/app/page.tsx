@@ -7,4 +7,19 @@ import { About } from "@/components/sections/About";
 import { Skills } from "@/components/sections/Skills";
 import { Contact } from "@/components/sections/Contact";
 
-export default function Home() { return <><Navbar /><main><Hero /><Projects /><About /><Skills /><Contact /></main><Footer /><BottomNavigation /></>; }
+export default function Home() {
+  return (
+    <>
+      <Navbar />
+      <main>
+        <Hero />
+        <Projects />
+        <About />
+        <Skills />
+        <Contact />
+      </main>
+      <Footer />
+      <BottomNavigation />
+    </>
+  );
+}

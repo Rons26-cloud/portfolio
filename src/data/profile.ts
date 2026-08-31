@@ -4,7 +4,7 @@ export const profile = {
   title: "Creative Developer & Digital Builder",
   description:
     "I build modern, responsive websites and digital products with clean code, thoughtful interactions, and attention to detail.",
-  profileImage: "/asset/projeck/xyrons-profil.jpg",
+  profileImage: "/assets/profile/xyrons-profile.jpg",
   cvUrl: "",
   email: "",
   githubUrl: "https://github.com/Rons26-cloud",

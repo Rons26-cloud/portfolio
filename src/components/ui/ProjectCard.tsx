@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowUpRight, Radio } from "lucide-react";
 import { SiGithub } from "react-icons/si";
@@ -7,8 +9,26 @@ import { ProjectVisual } from "./ProjectVisual";
 import { T } from "@/components/providers/LanguageProvider";
 
 export function ProjectCard({ project }: { project: Project }) {
+  const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
+    if (event.pointerType === "touch") return;
+    const card = event.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width;
+    const y = (event.clientY - rect.top) / rect.height;
+    card.style.setProperty("--card-rotate-x", `${(0.5 - y) * 7}deg`);
+    card.style.setProperty("--card-rotate-y", `${(x - 0.5) * 9}deg`);
+    card.style.setProperty("--card-light-x", `${x * 100}%`);
+    card.style.setProperty("--card-light-y", `${y * 100}%`);
+  };
+
+  const resetPerspective = (event: React.PointerEvent<HTMLElement>) => {
+    event.currentTarget.style.setProperty("--card-rotate-x", "0deg");
+    event.currentTarget.style.setProperty("--card-rotate-y", "0deg");
+  };
+
   return (
-    <article className="project-card">
+    <article className="project-card project-card-3d" onPointerMove={handlePointerMove} onPointerLeave={resetPerspective}>
+      <div className="project-card-shine" aria-hidden="true" />
       <div className="project-card-visual">
         <Link href={`/projects/${project.slug}`} aria-label={`View ${project.name}`}><ProjectVisual project={project} compact /></Link>
       </div>

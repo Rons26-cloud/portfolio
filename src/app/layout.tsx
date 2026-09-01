@@ -2,8 +2,11 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { profile } from "@/data/profile";
 import { LanguageProvider } from "@/components/providers/LanguageProvider";
+import { AmbientPlayer } from "@/components/ui/AmbientPlayer";
+import { PortfolioChat } from "@/components/ui/PortfolioChat";
 import { absoluteUrl, siteUrl } from "@/lib/site";
 import "./globals.css";
+import "./chat.css";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
@@ -58,7 +61,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className={`${geist.variable} ${mono.variable}`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider>{children}<AmbientPlayer /><PortfolioChat /></LanguageProvider>
       </body>
     </html>
   );

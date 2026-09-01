@@ -30,7 +30,7 @@ export type Project = {
   gallery: ProjectImage[];
 };
 
-export type SocialKey = "github" | "instagram" | "tiktok" | "linkedin" | "youtube" | "facebook";
+export type SocialKey = "github" | "instagram" | "tiktok" | "linkedin" | "youtube" | "facebook" | "website";
 export type Social = { key: SocialKey; label: string; url: string };
 export type Skill = { name: string; color: string; url: string; iconKey: string };
 export type SkillGroup = { category: string; items: Skill[] };

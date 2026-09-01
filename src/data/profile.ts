@@ -8,6 +8,7 @@ export const profile = {
   cvUrl: "",
   email: "",
   githubUrl: "https://github.com/Rons26-cloud",
+  websiteUrl: "https://www.xyronhub.xyz/",
 } as const;
 
 export const about = {

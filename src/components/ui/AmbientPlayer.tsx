@@ -72,8 +72,6 @@ const featuredCartoons = [
   { key: "7XKsORP3rgs", embed: "7XKsORP3rgs", title: "Oscar's Search for Water", creator: "Oscar's Oasis Official" },
 ] as const;
 
-// Playlist index bukan ID video. Entri semu itu membuat YouTube menampilkan
-// "Video unavailable", jadi katalog hanya memuat video individual terverifikasi.
 const classicVideos = [...featuredCartoons];
 
 const megaPlaylistCount = 180;

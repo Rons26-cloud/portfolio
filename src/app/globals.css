@@ -247,7 +247,7 @@ footer { padding-top:48px; }
 .ambient-volume input { width:54px;height:3px;accent-color:#7897ff;cursor:pointer; }
 .social-website { padding-inline:7px; }
 .social-website .social-button-icon { width:32px;height:32px;color:#8ba8ff; }
-.xyronhub-mark { display:block;width:32px;height:32px;border-radius:9px;background:url("https://www.xyronhub.xyz/logo-rony.png?v=3") center/cover no-repeat;box-shadow:0 0 14px rgba(120,151,255,.26);transition:transform .2s,box-shadow .2s; }
+.xyronhub-mark { display:block;width:32px;height:32px;border-radius:9px;background:url("https://www.xyronhub.xyz/logo-rony.png?v=3") 28% center/400% auto no-repeat;box-shadow:0 0 14px rgba(120,151,255,.26);transition:transform .2s,box-shadow .2s; }
 .social-website:hover .xyronhub-mark { transform:scale(1.08) rotate(-3deg);box-shadow:0 0 17px rgba(120,151,255,.38); }
 @keyframes ambient-level { from { transform:scaleY(.45);opacity:.5; } to { transform:scaleY(1);opacity:1; } }
 @media (max-width:767px) { .ambient-player { left:14px;bottom:calc(84px + env(safe-area-inset-bottom)); }.ambient-volume { display:none; }.ambient-copy { min-width:82px; } }

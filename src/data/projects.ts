@@ -67,7 +67,7 @@ export const projects: Project[] = [
     slug: "petani-nusantara", name: "Petani Nusantara", category: "Farming Simulation Game",
     description: "An open-world palm-oil farming game built around a time-based crop cycle, a growing community, and a player-run economy.", image: "/assets/projects/petani-nusantara/thumbnail.png",
     displayMode: "desktop",
-    technologies: ["Next.js", "TypeScript", "Phaser", "Supabase", "PostgreSQL", "React"], githubUrl: "https://github.com/Rons26-cloud/Petani-Nusantara", liveUrl: "",
+    technologies: ["Next.js", "TypeScript", "Phaser", "Unity", "C#", "Supabase", "PostgreSQL", "React"], githubUrl: "https://github.com/Rons26-cloud/Petani-Nusantara", liveUrl: "",
     problem: "A farming simulation spread across villages, crops, and online players needs a shared world and consistent state without a single giant map.",
     solution: "A layered world — region, province, village, and zone — where farming, community features, and the economy reinforce each other through one Supabase-backed data layer and a renderer-independent game client.",
     features: ["Time-based palm-oil crop cycle", "Layered village and zone world", "Persistent player characters and progression", "Account auth and RLS-secured saves", "Isometric rendering and in-browser controls", "Bilingual English and Indonesian copy"],

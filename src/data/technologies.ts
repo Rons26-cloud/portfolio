@@ -17,6 +17,7 @@ export const technologyCatalog: Record<string, TechnologyMeta> = {
   Flutter: { name: "Flutter", iconKey: "flutter", color: "#02569B", url: "https://flutter.dev/" },
   Unity: { name: "Unity", iconKey: "unity", color: "#FFFFFF", url: "https://unity.com/" },
   "C#": { name: "C#", iconKey: "c#", color: "#512BD4", url: "https://learn.microsoft.com/dotnet/csharp/" },
+  Phaser: { name: "Phaser", iconKey: "phaser", color: "#E8B83D", url: "https://phaser.io/" },
   Git: { name: "Git", iconKey: "git", color: "#F05032", url: "https://git-scm.com/" },
   GitHub: { name: "GitHub", iconKey: "github", color: "#FFFFFF", url: "https://github.com/" },
   Figma: { name: "Figma", iconKey: "figma", color: "#F24E1E", url: "https://figma.com/" },

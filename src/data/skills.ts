@@ -28,6 +28,7 @@ export const skills: SkillGroup[] = [
     items: [
       { name: "Unity", color: "#D9DEE3", iconKey: "unity", url: "https://unity.com/" },
       { name: "C#", color: "#512BD4", iconKey: "csharp", url: "https://learn.microsoft.com/dotnet/csharp/" },
+      { name: "Phaser", color: "#E8B83D", iconKey: "phaser", url: "https://phaser.io/" },
     ],
   },
   {

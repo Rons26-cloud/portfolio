@@ -20,6 +20,30 @@ import {
 import { TbBrandVscode, TbBrandCSharp } from "react-icons/tb";
 import { FigmaIcon } from "@/components/ui/FigmaIcon";
 
+function PhaserMark({ size = 22, className = "" }: { size?: string | number; className?: string }) {
+  const fontSize = typeof size === "number" ? Math.max(10, size * 0.55) : "0.7em";
+
+  return (
+    <span
+      className={className}
+      style={{
+        display: "inline-flex",
+        width: size,
+        height: size,
+        alignItems: "center",
+        justifyContent: "center",
+        border: "2px solid currentColor",
+        borderRadius: "5px",
+        fontSize,
+        fontWeight: 800,
+        lineHeight: 1,
+      }}
+    >
+      P
+    </span>
+  );
+}
+
 const iconMap: Record<string, React.ComponentType<{ size?: string | number; className?: string }>> = {
   react: SiReact,
   nextjs: SiNextdotjs,
@@ -42,6 +66,7 @@ const iconMap: Record<string, React.ComponentType<{ size?: string | number; clas
   vscode: TbBrandVscode,
   "vs code": TbBrandVscode,
   figma: FigmaIcon,
+  phaser: PhaserMark,
   python: SiPython,
   html: SiHtml5,
   "html5": SiHtml5,

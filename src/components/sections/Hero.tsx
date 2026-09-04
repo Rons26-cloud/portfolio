@@ -7,6 +7,7 @@ import { SocialButton } from "@/components/ui/SocialButton";
 import { HeroVisual } from "@/components/animations/HeroVisual";
 import { ParticleField } from "@/components/animations/ParticleField";
 import { T } from "@/components/providers/LanguageProvider";
+import { projects } from "@/data/projects";
 
 export function Hero() {
   return (
@@ -27,6 +28,11 @@ export function Hero() {
             <span>&amp; <T>Digital Builder</T></span>
           </h1>
           <p className="hero-description"><T>{profile.description}</T></p>
+
+          <div className="hero-proof" aria-label="Portfolio overview">
+            <div><strong>{String(projects.length).padStart(2, "0")}</strong><span><T>Selected projects</T></span></div>
+            <div><strong>WEB · MOBILE</strong><span><T>Product and system development</T></span></div>
+          </div>
 
           <div className="hero-actions">
             <Button href="/#projects">

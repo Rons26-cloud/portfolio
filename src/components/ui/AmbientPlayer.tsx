@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { ChevronDown, ChevronLeft, ChevronRight, Maximize2, Minimize2, Music2, Play, Search, X } from "lucide-react";
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { useScrollVisibility } from "@/hooks/useScrollVisibility";
 
 const tracks = [
   { id: "t0Bt3a-MLGs", title: "Surat Cinta untuk Starla", artist: "Virgoun" },
@@ -80,6 +83,8 @@ const totalTrackCount = tracks.length + megaPlaylistCount + marjinalCatalogCount
 type Source = "favorites" | "mega" | "marjinal" | "videos";
 
 export function AmbientPlayer() {
+  const { t } = useLanguage();
+  const navigationHidden = useScrollVisibility();
   const [open, setOpen] = useState(false);
   const [source, setSource] = useState<Source>("favorites");
   const [activeIndex, setActiveIndex] = useState(0);
@@ -114,15 +119,15 @@ export function AmbientPlayer() {
   }, [videoMode]);
 
   return (
-    <aside className={`youtube-music ${open ? "is-open" : ""}`} aria-label="Music player">
+    <aside className={`youtube-music ${open ? "is-open" : ""} ${navigationHidden && !open ? "media-nav-hidden" : ""}`} aria-label={t("Music player")}>
       <div className="youtube-frame-wrap" aria-hidden={!open}>
-        <div className="music-source-tabs" role="tablist" aria-label="Music source">
-          <button className={source === "favorites" ? "active" : ""} type="button" onClick={() => setSource("favorites")}>YTB Pilihan · {tracks.length}</button>
+        <div className="music-source-tabs" role="tablist" aria-label={t("Music source")}>
+          <button className={source === "favorites" ? "active" : ""} type="button" onClick={() => setSource("favorites")}>YTB {t("Selected")} · {tracks.length}</button>
           <button className={source === "mega" ? "active" : ""} type="button" onClick={() => setSource("mega")}>Viral 2026 · {megaPlaylistCount}</button>
           <button className={source === "marjinal" ? "active" : ""} type="button" onClick={() => setSource("marjinal")}>Marjinal · 10+</button>
-          <button className={source === "videos" ? "active" : ""} type="button" onClick={() => setSource("videos")}>Kartun · {classicVideos.length}</button>
+          <button className={source === "videos" ? "active" : ""} type="button" onClick={() => setSource("videos")}>{t("Cartoons")} · {classicVideos.length}</button>
         </div>
-        <div className="music-library-count"><strong>{totalTrackCount}</strong><span>lagu tersedia</span><i>Auto-next aktif</i></div>
+        <div className="music-library-count"><strong>{totalTrackCount}</strong><span>{t("songs available")}</span><i>{t("Auto-next enabled")}</i></div>
 
         {source === "favorites" ? (
           <iframe key={activeTrack.id} src={playerUrl} title={`${activeTrack.title} by ${activeTrack.artist}`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
@@ -134,22 +139,22 @@ export function AmbientPlayer() {
           <iframe key={activeVideo.key} src={classicVideoUrl} title={`${activeVideo.title} by ${activeVideo.creator}`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
         )}
 
-        <div className="youtube-track-copy"><span>{source === "videos" ? "NOW WATCHING" : "NOW PLAYING"}</span><p>{source === "favorites" ? `${activeTrack.title} · ${activeTrack.artist}` : source === "mega" ? `Mega Playlist · ${megaPlaylistCount} lagu 2026` : source === "marjinal" ? "Buruh Tani + katalog lagu Marjinal" : `${activeVideo.title} · ${activeVideo.creator}`}</p></div>
+        <div className="youtube-track-copy"><span>{t(source === "videos" ? "NOW WATCHING" : "NOW PLAYING")}</span><p>{source === "favorites" ? `${activeTrack.title} · ${activeTrack.artist}` : source === "mega" ? `Mega Playlist · ${megaPlaylistCount} ${t("tracks")} 2026` : source === "marjinal" ? `Buruh Tani + ${t("Artist catalog")} Marjinal` : `${activeVideo.title} · ${activeVideo.creator}`}</p></div>
 
         {source === "favorites" && <><div className="music-controls">
-          <button type="button" onClick={() => stepTrack(-1)} aria-label="Previous track"><ChevronLeft size={16} /></button>
-          <label className="music-search"><Search size={13} aria-hidden="true" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Cari musik..." aria-label="Cari musik" /></label>
-          <button type="button" onClick={() => stepTrack(1)} aria-label="Next track"><ChevronRight size={16} /></button>
+          <button type="button" onClick={() => stepTrack(-1)} aria-label={t("Previous track")}><ChevronLeft size={16} /></button>
+          <label className="music-search"><Search size={13} aria-hidden="true" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("Search music...")} aria-label={t("Search music")} /></label>
+          <button type="button" onClick={() => stepTrack(1)} aria-label={t("Next track")}><ChevronRight size={16} /></button>
         </div><div className="music-results">
-          {results.length > 0 ? results.map((track) => { const index = tracks.findIndex((item) => item.id === track.id); return <button className={index === activeIndex ? "active" : ""} type="button" key={track.id} onClick={() => setActiveIndex(index)}><Play size={11} /><span>{track.title}<small>{track.artist}</small></span></button>; }) : <p>Musik tidak ditemukan.</p>}
-        </div><button className="music-cinema-button" type="button" onClick={() => setVideoMode("full")}><Maximize2 size={14} /> Buka pemutar video</button></>}
+          {results.length > 0 ? results.map((track) => { const index = tracks.findIndex((item) => item.id === track.id); return <button className={index === activeIndex ? "active" : ""} type="button" key={track.id} onClick={() => setActiveIndex(index)}><Play size={11} /><span>{track.title}<small>{track.artist}</small></span></button>; }) : <p>{t("Music not found.")}</p>}
+        </div><button className="music-cinema-button" type="button" onClick={() => setVideoMode("full")}><Maximize2 size={14} /> {t("Open video player")}</button></>}
 
-        {source === "videos" && <><label className="video-search"><Search size={14} aria-hidden="true" /><input value={videoQuery} onChange={(event) => setVideoQuery(event.target.value)} placeholder="Cari kartun atau musim..." aria-label="Cari kartun" /></label><div className="video-library-list">{filteredVideos.length > 0 ? filteredVideos.map((video) => { const index = classicVideos.findIndex((item) => item.key === video.key); return <button className={index === activeVideoIndex ? "active" : ""} type="button" key={video.key} onClick={() => setActiveVideoIndex(index)}><Play size={12} /><span>{video.title}<small>{video.creator}</small></span></button>; }) : <p className="video-empty">Kartun tidak ditemukan.</p>}</div><button className="music-cinema-button" type="button" onClick={() => setVideoMode("full")}><Maximize2 size={14} /> Tonton mini / fullscreen</button></>}
+        {source === "videos" && <><label className="video-search"><Search size={14} aria-hidden="true" /><input value={videoQuery} onChange={(event) => setVideoQuery(event.target.value)} placeholder={t("Search cartoons or seasons...")} aria-label={t("Search cartoons")} /></label><div className="video-library-list">{filteredVideos.length > 0 ? filteredVideos.map((video) => { const index = classicVideos.findIndex((item) => item.key === video.key); return <button className={index === activeVideoIndex ? "active" : ""} type="button" key={video.key} onClick={() => setActiveVideoIndex(index)}><Play size={12} /><span>{video.title}<small>{video.creator}</small></span></button>; }) : <p className="video-empty">{t("Cartoon not found.")}</p>}</div><button className="music-cinema-button" type="button" onClick={() => setVideoMode("full")}><Maximize2 size={14} /> {t("Watch mini / fullscreen")}</button></>}
 
-        <details className="music-references"><summary>Daftar pustaka musik</summary><a href="https://open.spotify.com/playlist/2WEjl04WUKRyDD6oUZC5wN" target="_blank" rel="noopener noreferrer">INDO POP 2026 · 180 lagu</a><a href="https://www.youtube.com/watch?v=102HT0f5K7U" target="_blank" rel="noopener noreferrer">Marjinal · Buruh Tani</a><a href="https://open.spotify.com/artist/3IOhBSi8QpYo4rR6oQKZP6" target="_blank" rel="noopener noreferrer">Katalog artis Marjinal</a></details>
+        <details className="music-references"><summary>{t("Music references")}</summary><a href="https://open.spotify.com/playlist/2WEjl04WUKRyDD6oUZC5wN" target="_blank" rel="noopener noreferrer">INDO POP 2026 · 180 {t("tracks")}</a><a href="https://www.youtube.com/watch?v=102HT0f5K7U" target="_blank" rel="noopener noreferrer">Marjinal · Buruh Tani</a><a href="https://open.spotify.com/artist/3IOhBSi8QpYo4rR6oQKZP6" target="_blank" rel="noopener noreferrer">Marjinal · {t("Artist catalog")}</a></details>
       </div>
-      <button className="youtube-music-toggle" type="button" onClick={() => setOpen((current) => !current)} aria-expanded={open}><span className="youtube-music-icon">{open ? <ChevronDown size={17} /> : <Play size={16} />}</span><span><small><Music2 size={11} /> XYRONS MEDIA · {totalTrackCount} TRACKS + {classicVideos.length} KARTUN</small>{open ? "Sembunyikan player" : source === "mega" ? "Viral Indonesia 2026" : source === "marjinal" ? "Katalog Marjinal" : source === "videos" ? activeVideo.title : activeTrack.title}</span></button>
-      {videoMode !== "closed" && <div className={`music-cinema mode-${videoMode}`} role="dialog" aria-modal={videoMode === "full"} aria-label={`${cinemaTitle} video`}><div className="music-cinema-toolbar"><button type="button" onClick={() => setVideoMode(videoMode === "full" ? "mini" : "full")} aria-label={videoMode === "full" ? "Kecilkan video" : "Besarkan video"}>{videoMode === "full" ? <Minimize2 size={19} /> : <Maximize2 size={17} />}</button><button type="button" onClick={() => setVideoMode("closed")} aria-label="Tutup video"><X size={20} /></button></div><div className="music-cinema-stage"><iframe src={`${cinemaUrl}&autoplay=1`} title={`${cinemaTitle} video player`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /><div><span>NOW WATCHING</span><h2>{cinemaTitle}</h2><p>{cinemaCreator}</p></div></div></div>}
+      <button className="youtube-music-toggle" type="button" onClick={() => setOpen((current) => !current)} aria-expanded={open}><span className="youtube-music-icon">{open ? <ChevronDown size={17} /> : <Play size={16} />}</span><span><small><Music2 size={11} /> XYRONS MEDIA · {totalTrackCount} TRACKS + {classicVideos.length} {t("Cartoons").toUpperCase()}</small>{open ? t("Hide player") : source === "mega" ? "Viral Indonesia 2026" : source === "marjinal" ? `Marjinal ${t("Artist catalog")}` : source === "videos" ? activeVideo.title : activeTrack.title}</span></button>
+      {videoMode !== "closed" && typeof document !== "undefined" && createPortal(<div className={`music-cinema mode-${videoMode}`} role="dialog" aria-modal={videoMode === "full"} aria-label={`${cinemaTitle} video`}><div className="music-cinema-toolbar"><button type="button" onClick={() => setVideoMode(videoMode === "full" ? "mini" : "full")} aria-label={t(videoMode === "full" ? "Minimize video" : "Maximize video")}>{videoMode === "full" ? <Minimize2 size={19} /> : <Maximize2 size={17} />}</button><button type="button" onClick={() => setVideoMode("closed")} aria-label={t("Close video")}><X size={20} /></button></div><div className="music-cinema-stage"><iframe src={`${cinemaUrl}&autoplay=1`} title={`${cinemaTitle} video player`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /><div><span>{t("NOW WATCHING")}</span><h2>{cinemaTitle}</h2><p>{cinemaCreator}</p></div></div></div>, document.body)}
     </aside>
   );
 }

@@ -2,3 +2,37 @@
 @media(max-width:767px){.xchat-root{right:12px;bottom:calc(12px + env(safe-area-inset-bottom))}.xchat-launcher{width:56px;height:56px;border-radius:18px}.xchat-avatar.large{width:48px;height:48px}.xchat-window{width:min(390px,calc(100vw - 20px));height:min(540px,calc(100dvh - 24px));border-radius:19px}.xchat-message{max-width:88%}.xchat-message-image img{max-height:230px}}
 @media(max-width:350px){.xchat-window{width:calc(100vw - 12px);height:calc(100dvh - 16px)}.xchat-quick-actions{grid-template-columns:1fr}.xchat-header{padding-inline:9px}.xchat-messages{padding-inline:9px}}
 @media(prefers-reduced-motion:reduce){.xchat-window,.xchat-typing i{animation:none}.xchat-launcher{transition:none}}
+
+@media(max-width:767px){
+  .xchat-root{right:14px;bottom:calc(86px + env(safe-area-inset-bottom))}
+  .xchat-root.is-open{right:12px;bottom:calc(86px + env(safe-area-inset-bottom));left:auto}
+  .xchat-launcher{width:52px;height:52px;border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,.38)}
+  .xchat-avatar.large{width:44px;height:44px}
+  .xchat-window{width:min(320px,calc(100vw - 28px));height:min(410px,52dvh);border-radius:17px;border-color:rgba(255,255,255,.12);background:#0f1420;box-shadow:0 18px 55px rgba(0,0,0,.55);backdrop-filter:blur(16px)}
+  .xchat-header{min-height:66px;padding:9px 10px;background:#121827}
+  .xchat-header .xchat-avatar.large{width:44px;height:44px}
+  .xchat-header-copy strong{font-size:.82rem}.xchat-status{font-size:.58rem}
+  .xchat-messages{padding:12px 10px}.xchat-bubble p{font-size:.76rem;line-height:1.55}
+  .xchat-quick-actions{display:flex;gap:6px;padding:7px 10px;overflow-x:auto;scrollbar-width:none}
+  .xchat-quick-actions button{flex:none;max-width:170px;padding:8px 10px;font-size:.58rem}
+  .xchat-form{grid-template-columns:38px minmax(0,1fr) 40px;padding:9px 10px calc(10px + env(safe-area-inset-bottom))}
+  .xchat-form textarea{min-height:42px;font-size:.75rem}.xchat-attach,.xchat-send{height:42px}
+}
+
+@media(max-width:360px){
+  .xchat-root.is-open{right:8px}
+  .xchat-window{width:calc(100vw - 16px);height:min(390px,50dvh)}
+}
+
+.xchat-launcher{border-color:rgba(255,255,255,.12);border-radius:16px;background:#111827;box-shadow:0 10px 28px rgba(0,0,0,.38)}
+.xchat-launcher:before,.xchat-window:before,.xchat-window:after{display:none}
+.xchat-online-dot{display:none}
+.xchat-avatar{border-color:rgba(255,255,255,.1);background:#151c2a}
+.xchat-window{border-color:rgba(255,255,255,.11);border-radius:18px;background:#0d121b;box-shadow:0 20px 60px rgba(0,0,0,.55);backdrop-filter:none}
+.xchat-header{min-height:64px;border-bottom-color:rgba(255,255,255,.08);background:#111722}
+.xchat-status{color:#7f8a9b}.xchat-status i{display:none}
+.xchat-message.assistant .xchat-bubble{border-color:rgba(255,255,255,.08);background:#151b26}
+.xchat-message.user .xchat-bubble{background:#5269d5;box-shadow:none}
+.xchat-quick-actions button{background:transparent}
+.xchat-composer{background:#0b1018}
+.xchat-form textarea{background:#111722}

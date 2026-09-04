@@ -2,15 +2,17 @@
 
 import Image from "next/image";
 import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
-import { CheckCheck, ImagePlus, Minus, RotateCcw, Send, X } from "lucide-react";
+import { CheckCheck, ImagePlus, Minus, RotateCcw, Send } from "lucide-react";
 import { ChatImageMessage } from "@/components/chat/ChatImageMessage";
 import { ImagePreview } from "@/components/chat/ImagePreview";
 import type { ChatApiError, ChatApiResponse, ChatImageInput, ChatMessage, ChatMessageType, ChatRequestBody } from "@/lib/chat-types";
 import { resolveLocalResponse } from "@/lib/xyrons-knowledge";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 const MAX_FILE_BYTES = 10 * 1024 * 1024;
 const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
-const quickActions = ["Siapa Xyrons?", "Lihat proyek", "Apa kelebihannya?", "Cara menghubungi?"];
+const quickActions = ["Who is Xyrons?", "See projects", "How can I get in touch?"];
+const welcomeMessage = "Hi! I can help with Xyrons, projects, skills, and contact information.";
 
 type Attachment = { file: File; previewUrl: string };
 type LastSubmission = { payload: ChatRequestBody };
@@ -46,6 +48,7 @@ function responseToMessage(data: ChatApiResponse): ChatMessage {
 }
 
 export function PortfolioChat() {
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -53,7 +56,7 @@ export function PortfolioChat() {
   const [attachment, setAttachment] = useState<Attachment | null>(null);
   const [lastSubmission, setLastSubmission] = useState<LastSubmission | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { id: "welcome", role: "assistant", type: "text", text: "Halo! Saya Xyrons AI Assistant. Kirim pertanyaan atau unggah gambar untuk saya analisis.", createdAt: nowLabel() },
+    { id: "welcome", role: "assistant", type: "text", text: t(welcomeMessage), createdAt: nowLabel() },
   ]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
@@ -74,8 +77,8 @@ export function PortfolioChat() {
   const selectFile = (file?: File) => {
     setError("");
     if (!file) return;
-    if (!ALLOWED_TYPES.has(file.type)) return setError("Format gambar harus JPG, PNG, atau WebP.");
-    if (file.size > MAX_FILE_BYTES) return setError("Ukuran gambar maksimal 10 MB.");
+    if (!ALLOWED_TYPES.has(file.type)) return setError(t("Image format must be JPG, PNG, or WebP."));
+    if (file.size > MAX_FILE_BYTES) return setError(t("Image size is limited to 10 MB."));
     if (attachment) URL.revokeObjectURL(attachment.previewUrl);
     const nextAttachment = { file, previewUrl: URL.createObjectURL(file) };
     attachmentRef.current = nextAttachment;
@@ -89,20 +92,25 @@ export function PortfolioChat() {
     const timeout = window.setTimeout(() => controller.abort(), 50_000);
     try {
       const response = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), signal: controller.signal });
-      const data = await response.json() as ChatApiResponse | ChatApiError;
-      if (!response.ok || !("type" in data)) {
-        const message = response.status === 429
-          ? "Xyrons AI sedang mencapai batas penggunaan. Coba lagi beberapa saat."
-          : "Maaf, jawaban belum berhasil dimuat. Coba lagi.";
-        throw new Error(message);
+      const isJson = response.headers.get("content-type")?.includes("application/json");
+      if (!isJson || response.status === 404 || response.status === 503) {
+        if (payload.image) throw new Error(t("Sorry, this image could not be processed. Please upload another image."));
+        setMessages((current) => [...current, responseToMessage({ source: "local", type: "text", text: t("I can only answer about Xyrons, portfolio projects, skills, and contact information right now.") })]);
+        setLastSubmission(null);
+        return;
       }
+      const data = await response.json() as ChatApiResponse | ChatApiError;
+      if (!response.ok || !("type" in data)) throw new Error(response.status === 429 ? t("Xyrons AI has reached its usage limit. Please try again shortly.") : t("Sorry, the answer could not be loaded. Please try again."));
       setMessages((current) => [...current, responseToMessage(data)]);
       setLastSubmission(null);
     } catch (requestError) {
-      setError(requestError instanceof Error && requestError.message !== "REQUEST_FAILED"
-        ? requestError.message
-        : "Maaf, jawaban belum berhasil dimuat. Coba lagi.");
-      setLastSubmission({ payload });
+      if (!payload.image && requestError instanceof TypeError) {
+        setMessages((current) => [...current, responseToMessage({ source: "local", type: "text", text: t("I can only answer about Xyrons, portfolio projects, skills, and contact information right now.") })]);
+        setLastSubmission(null);
+      } else {
+        setError(requestError instanceof Error ? requestError.message : t("Sorry, the answer could not be loaded. Please try again."));
+        setLastSubmission({ payload });
+      }
     } finally {
       window.clearTimeout(timeout);
       setLoading(false);
@@ -120,7 +128,7 @@ export function PortfolioChat() {
         image = await fileToInput(attachment.file);
         userImageUrl = `data:${image.mimeType};base64,${image.data}`;
       } catch {
-        setError("Maaf, gambar ini belum bisa diproses. Coba unggah gambar lain.");
+        setError(t("Sorry, this image could not be processed. Please upload another image."));
         return;
       }
     }
@@ -146,19 +154,19 @@ export function PortfolioChat() {
   };
 
   return (
-    <aside className="xchat-root" aria-label="Xyrons AI Assistant">
-      {!open ? <button className="xchat-launcher" type="button" onClick={() => setOpen(true)} aria-label="Buka Xyrons AI Assistant"><RobotAvatar online /></button> : (
-        <section className="xchat-window" role="dialog" aria-label="Percakapan dengan Xyrons AI Assistant">
-          <header className="xchat-header"><RobotAvatar online /><div className="xchat-header-copy"><strong>Xyrons AI Assistant</strong><span className="xchat-status"><i aria-hidden="true" /> Online · Siap membantu</span></div><div className="xchat-header-actions"><button className="xchat-icon-button" type="button" onClick={() => setOpen(false)} aria-label="Minimalkan chatbot"><Minus size={17} /></button><button className="xchat-icon-button" type="button" onClick={() => { setOpen(false); setError(""); }} aria-label="Tutup chatbot"><X size={18} /></button></div></header>
+    <aside className={`xchat-root ${open ? "is-open" : ""}`} aria-label="Xyrons AI Assistant">
+      {!open ? <button className="xchat-launcher" type="button" onClick={() => setOpen(true)} aria-label={t("Open Xyrons AI Assistant")}><RobotAvatar online /></button> : (
+        <section className="xchat-window" role="dialog" aria-label={t("Chat with Xyrons AI Assistant")}>
+          <header className="xchat-header"><RobotAvatar online /><div className="xchat-header-copy"><strong>Xyrons Assistant</strong><span className="xchat-status">{t("Portfolio scope")}</span></div><button className="xchat-icon-button" type="button" onClick={() => setOpen(false)} aria-label={t("Minimize chatbot")}><Minus size={17} /></button></header>
           <div className="xchat-messages" aria-live="polite" aria-busy={loading}>
-            {messages.map((message) => <article className={`xchat-message ${message.role}`} key={message.id}>{message.role === "assistant" && <RobotAvatar small />}<div className="xchat-bubble">{message.text && <p>{message.text}</p>}{message.images?.map((image, index) => <ChatImageMessage image={image} key={`${message.id}-${index}`} />)}<div className="xchat-meta"><time>{message.createdAt}</time>{message.role === "user" && <CheckCheck size={11} aria-label="Terkirim" />}</div></div></article>)}
-            {loading && <article className="xchat-message assistant"><RobotAvatar small /><div className="xchat-bubble xchat-typing" aria-label="Xyrons AI sedang mengetik"><i /><i /><i /></div></article>}
+            {messages.map((message) => <article className={`xchat-message ${message.role}`} key={message.id}><div className="xchat-bubble">{message.text && <p>{message.id === "welcome" ? t(welcomeMessage) : message.text}</p>}{message.images?.map((image, index) => <ChatImageMessage image={image} key={`${message.id}-${index}`} />)}<div className="xchat-meta"><time>{message.createdAt}</time>{message.role === "user" && <CheckCheck size={11} aria-label={t("Sent")} />}</div></div></article>)}
+            {loading && <article className="xchat-message assistant"><div className="xchat-bubble xchat-typing" aria-label={t("Xyrons AI is typing")}><i /><i /><i /></div></article>}
             <div ref={endRef} />
           </div>
-          <div>{error && <div className="xchat-error" role="alert"><span>{error}</span>{lastSubmission && <button type="button" onClick={() => void requestAssistant(lastSubmission.payload)} disabled={loading}><RotateCcw size={12} /> Coba lagi</button>}</div>}<div className="xchat-quick-actions">{quickActions.map((action) => <button type="button" key={action} onClick={() => void send(action)} disabled={loading}>{action}</button>)}</div></div>
+          <div>{error && <div className="xchat-error" role="alert"><span>{error}</span>{lastSubmission && <button type="button" onClick={() => void requestAssistant(lastSubmission.payload)} disabled={loading}><RotateCcw size={12} /> {t("Try again")}</button>}</div>}<div className="xchat-quick-actions">{quickActions.map((action) => <button type="button" key={action} onClick={() => void send(t(action))} disabled={loading}>{t(action)}</button>)}</div></div>
           <div className="xchat-composer">
             {attachment && <ImagePreview file={attachment.file} url={attachment.previewUrl} onRemove={removeAttachment} />}
-            <form className="xchat-form" onSubmit={submit}><input ref={fileInputRef} type="file" accept="image/jpeg,image/png,image/webp" hidden onChange={(event) => selectFile(event.target.files?.[0])} /><button className="xchat-attach" type="button" onClick={() => fileInputRef.current?.click()} disabled={loading} aria-label="Unggah gambar"><ImagePlus size={18} /></button><textarea value={input} onChange={(event) => { setInput(event.target.value); if (error) setError(""); }} onKeyDown={handleKeyDown} maxLength={2000} rows={1} placeholder={loading ? "Xyrons AI sedang mengetik..." : "Tulis pertanyaan bebas..."} disabled={loading} aria-label="Pesan untuk Xyrons AI" /><button className="xchat-send" type="submit" disabled={loading || (!input.trim() && !attachment)} aria-label="Kirim pesan"><Send size={17} /></button></form>
+            <form className="xchat-form" onSubmit={submit}><input ref={fileInputRef} type="file" accept="image/jpeg,image/png,image/webp" hidden onChange={(event) => selectFile(event.target.files?.[0])} /><button className="xchat-attach" type="button" onClick={() => fileInputRef.current?.click()} disabled={loading} aria-label={t("Upload image")}><ImagePlus size={18} /></button><textarea value={input} onChange={(event) => { setInput(event.target.value); if (error) setError(""); }} onKeyDown={handleKeyDown} maxLength={2000} rows={1} placeholder={loading ? t("Xyrons AI is typing") : t("Type your message...")} disabled={loading} aria-label={t("Message Xyrons AI")} /><button className="xchat-send" type="submit" disabled={loading || (!input.trim() && !attachment)} aria-label={t("Send message")}><Send size={17} /></button></form>
           </div>
         </section>
       )}

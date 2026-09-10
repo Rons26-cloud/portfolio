@@ -127,9 +127,15 @@ export default async function ProjectPage({ params }: Props) {
                   </div>
                 </div>
                 <div className="offer-actions">
-                  <Link href="/#contact">
-                    <ShoppingBag size={18} /> <T>{project.offer.ctaLabel ?? "Request This Project"}</T> <span aria-hidden="true">↗</span>
-                  </Link>
+                  {project.offer.ctaHref ? (
+                    <a className="offer-cta" href={project.offer.ctaHref} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink size={18} /> <T>{project.offer.ctaLabel ?? "Learn More"}</T> <span aria-hidden="true">↗</span>
+                    </a>
+                  ) : (
+                    <Link href="/#contact">
+                      <ShoppingBag size={18} /> <T>{project.offer.ctaLabel ?? "Request This Project"}</T> <span aria-hidden="true">↗</span>
+                    </Link>
+                  )}
                   {project.githubUrl && (
                     <a className="offer-github" href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.name} source code on GitHub`}>
                       <SiGithub size={19} aria-hidden="true" /> <T>View on GitHub</T>

@@ -2,6 +2,30 @@ import type { Project } from "@/types/project";
 
 export const projects: Project[] = [
   {
+    slug: "nusarta", name: "NUSARTA", category: "Personal Finance Platform",
+    description: "A personal finance platform for recording and managing finances manually with a Flutter Android app, Next.js website, and Supabase backend.",
+    image: "", displayMode: "mobile",
+    technologies: ["Flutter", "Dart", "Next.js", "TypeScript", "Supabase", "PostgreSQL"],
+    githubUrl: "https://github.com/Rons26-cloud/nusarta", liveUrl: "https://nusarta.nusarta-official.workers.dev/",
+    problem: "Managing personal finances manually often lacks structure, making it hard to track income, expenses, budgets, and financial goals in one place.",
+    solution: "A self-contained personal finance platform that lets users record transactions manually, set budgets and goals, and view automatic reports — all secured with PIN and biometric authentication, without connecting to real bank accounts.",
+    features: ["Dashboard with balance, income, expense, and cash flow", "Manual transaction recording with categories", "Multiple financial accounts (cash, bank, e-wallet)", "Budget limits per category", "Financial goals tracking", "Automatic daily, weekly, monthly, and yearly reports", "Search and filter transactions", "PIN and biometric authentication with encrypted data"],
+    packageContents: [
+      { title: "Android App", description: "Flutter application for recording transactions, managing accounts, budgets, goals, and viewing reports with biometric and PIN security." },
+      { title: "Official Website", description: "Next.js marketing site with features overview, security info, download page, and documentation." },
+      { title: "Supabase Backend", description: "PostgreSQL database with row-level security, migrations, seed data, and auth for secure multi-user data isolation." },
+      { title: "Shared Packages", description: "Monorepo packages for brand config, shared types, UI components, and utilities across web and mobile." },
+    ],
+    offer: {
+      title: "Open Source Personal Finance Tool",
+      description: "NUSARTA is a free, open-source personal finance app built for personal use. It is not connected to real bank accounts and is not intended for commercial sale. View the source code on GitHub.",
+      ctaLabel: "View on GitHub",
+      ctaHref: "https://github.com/Rons26-cloud/nusarta",
+    },
+    coverImage: "",
+    gallery: [],
+  },
+  {
     slug: "niagantara", name: "NIAGANTARA", category: "Business Management Platform",
     description: "A multi-tenant business platform for dashboards, POS, inventory, finance, reporting, and connected operations.", image: "/assets/projects/niagantara/thumbnail.jpg", displayMode: "desktop",
     technologies: ["React", "TypeScript", "Supabase", "PostgreSQL", "Node.js", "GitHub"], githubUrl: "https://github.com/Rons26-cloud/niagantara", liveUrl: "https://niagantara-web.pages.dev/",

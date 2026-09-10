@@ -25,6 +25,7 @@ export type Project = {
     title: string;
     description: string;
     ctaLabel?: string;
+    ctaHref?: string;
   };
   coverImage: string;
   gallery: ProjectImage[];

@@ -4,7 +4,7 @@ export const projects: Project[] = [
   {
     slug: "nusarta", name: "NUSARTA", category: "Personal Finance Platform",
     description: "A personal finance platform for recording and managing finances manually with a Flutter Android app, Next.js website, and Supabase backend.",
-    image: "/assets/projects/nusarta/web.png", displayMode: "mobile",
+    image: "/assets/projects/nusarta/web.png", displayMode: "desktop",
     technologies: ["Flutter", "Dart", "Next.js", "TypeScript", "Supabase", "PostgreSQL"],
     githubUrl: "https://github.com/Rons26-cloud/nusarta", liveUrl: "https://nusarta.nusarta-official.workers.dev/",
     problem: "Managing personal finances manually often lacks structure, making it hard to track income, expenses, budgets, and financial goals in one place.",

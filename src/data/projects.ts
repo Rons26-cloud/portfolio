@@ -46,9 +46,9 @@ export const projects: Project[] = [
       title: "Available for Custom Deployment",
       description: "NIAGANTARA can be adapted for multi-branch businesses that need integrated operations, POS, inventory, and reporting. Contact me to discuss licensing, deployment, and custom modules.",
     },
-    coverImage: "/assets/projects/niagantara/dashboard-overview.jpg",
+    coverImage: "/assets/projects/niagantara/dashboard-overview.jpg?v=ec06130b2761",
     gallery: [
-      { src: "/assets/projects/niagantara/dashboard-overview.jpg", alt: "NIAGANTARA dashboard overview", caption: "Dashboard Overview" },
+      { src: "/assets/projects/niagantara/dashboard-overview.jpg?v=ec06130b2761", alt: "NIAGANTARA dashboard overview", caption: "Dashboard Overview" },
       { src: "/assets/projects/niagantara/dashboard-operations.jpg", alt: "NIAGANTARA operational dashboard", caption: "Operational View" },
     ],
   },

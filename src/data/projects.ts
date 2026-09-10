@@ -4,7 +4,7 @@ export const projects: Project[] = [
   {
     slug: "nusarta", name: "NUSARTA", category: "Personal Finance Platform",
     description: "A personal finance platform for recording and managing finances manually with a Flutter Android app, Next.js website, and Supabase backend.",
-    image: "", displayMode: "mobile",
+    image: "/assets/projects/nusarta/web.png", displayMode: "mobile",
     technologies: ["Flutter", "Dart", "Next.js", "TypeScript", "Supabase", "PostgreSQL"],
     githubUrl: "https://github.com/Rons26-cloud/nusarta", liveUrl: "https://nusarta.nusarta-official.workers.dev/",
     problem: "Managing personal finances manually often lacks structure, making it hard to track income, expenses, budgets, and financial goals in one place.",
@@ -17,13 +17,17 @@ export const projects: Project[] = [
       { title: "Shared Packages", description: "Monorepo packages for brand config, shared types, UI components, and utilities across web and mobile." },
     ],
     offer: {
-      title: "Open Source Personal Finance Tool",
-      description: "NUSARTA is a free, open-source personal finance app built for personal use. It is not connected to real bank accounts and is not intended for commercial sale. View the source code on GitHub.",
-      ctaLabel: "View on GitHub",
+      title: "Personal Project — Not for Sale",
+      description: "NUSARTA is a personal, open-source project built for my own use. It is not connected to real bank accounts and is not available for purchase or commercial licensing. You can view and fork the source code on GitHub.",
+      ctaLabel: "View Source on GitHub",
       ctaHref: "https://github.com/Rons26-cloud/nusarta",
     },
-    coverImage: "",
-    gallery: [],
+    coverImage: "/assets/projects/nusarta/web.png",
+    gallery: [
+      { src: "/assets/projects/nusarta/web.png", alt: "NUSARTA website preview", caption: "Official Website" },
+      { src: "/assets/projects/nusarta/web02.jpg", alt: "NUSARTA website features", caption: "Website Features" },
+      { src: "/assets/projects/nusarta/apk.png", alt: "NUSARTA Android app", caption: "Android App" },
+    ],
   },
   {
     slug: "niagantara", name: "NIAGANTARA", category: "Business Management Platform",
